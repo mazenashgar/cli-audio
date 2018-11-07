@@ -20,30 +20,37 @@ class FrontEnd:
     def menu(self, args):
         self.stdscr = curses.initscr()
         self.stdscr.border()
-        self.stdscr.addstr(0,0, "cli-audio",curses.A_REVERSE)
-        self.stdscr.addstr(5,10, "c - Change current song")
-        self.stdscr.addstr(6,10, "p - Play/Pause")
-        self.stdscr.addstr(7,10, "l - Library")
-        self.stdscr.addstr(9,10, "ESC - Quit")
-        self.updateSong()
-        self.stdscr.refresh()
         while True:
-            c = self.stdscr.getch()
-            if c == 27:
-                self.quit()
-            elif c == ord('p'):
-                if self.nowPlaying == True:
-                     self.player.pause()
-            elif c == ord('c'):
-                height, width = self.stdscr.getmaxyx()
-                if height >= 10 and width >= 90:
-                    self.changeSong()
-                    self.updateSong()
-                    self.stdscr.touchwin()
-                    self.stdscr.refresh()
-            elif c == ord('l'):
-                self.displayDir()
-        curses.wrapper(self.menu)
+            height, width = self.stdscr.getmaxyx()
+            if height >= 16 and width >= 60:
+              self.stdscr.clear()
+              self.stdscr.border()
+              self.stdscr.addstr(0,0, "cli-audio",curses.A_REVERSE)
+              self.stdscr.addstr(5,10, "c - Change current song")
+              self.stdscr.addstr(6,10, "p - Play/Pause")
+              self.stdscr.addstr(7,10, "l - Library")
+              self.stdscr.addstr(9,10, "ESC - Quit")
+              self.updateSong()
+              self.stdscr.refresh()
+            while True:
+              height, width = self.stdscr.getmaxyx()
+              c = self.stdscr.getch()
+              if c == 27:
+                  self.quit()
+              elif c == ord('p'):
+                  if self.nowPlaying == True:
+                       self.player.pause()
+              elif c == ord('c'):
+                  #if height >= 10 and width >= 90:
+                      self.changeSong()
+                      self.updateSong()
+                      self.stdscr.touchwin()
+                      self.stdscr.refresh()
+              elif c == ord('l'):
+                  self.displayDir()
+              resize = curses.is_term_resized(height,width)
+              if resize is True:
+                 break
     
     def updateSong(self):
         self.stdscr.addstr(15,10, "                                        ")
@@ -62,7 +69,6 @@ class FrontEnd:
              self.stdscr.touchwin()
              self.stdscr.refresh()
              pathWithExt = (path.decode(encoding="utf-8")) + '.wav'
-             #print(pathWithExt)
              if (pathWithExt) in self.mediaFiles:
                   if self.nowPlaying == True:
                       self.player.stop()

@@ -5,28 +5,36 @@ import wave
 import time
 
 class Player:
+
+    playingNow = False
+    trackPlaying = ""
     def __init__(self):
         self.currentSong = "Nothing playing."
         self.paused = True
         self.position = 0
 
     def getCurrentSong(self):
+        if self.playingNow == True:
+           if self.stream.is_stopped() or self.paused == True:
+             self.currentSong = "Nothing playing."
         return self.currentSong
 
     def pause(self):
         if self.paused == False:
             self.paused = True
             self.stream.stop_stream()
+            #self.currentSong = "Nothing playing."
         else:
             self.paused = False
             self.stream.start_stream()
+            self.currentSong = self.trackPlaying
 
     def play(self, track):
         self.paused = False
         self.currentSong = track
+        self.trackPlaying = track
         track = '/Users/mazenashgar/Desktop/GVSU/CIS 343/PythonProject/cli-audio/media/' + track + '.wav'
         self.wf = wave.open(track, 'rb')
-        #self.wf = wave.open('/Users/mazenashgar/Desktop/buddy.wav', 'rb')
 
         # instantiate PyAudio (1)
         self.p = pyaudio.PyAudio()
@@ -40,6 +48,7 @@ class Player:
 
         # start the self.stream (4)
         self.stream.start_stream()
+        self.playingNow = True
 
     def stop(self):
         self.stream.stop_stream()
