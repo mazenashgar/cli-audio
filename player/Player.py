@@ -24,7 +24,9 @@ class Player:
     def play(self, track):
         self.paused = False
         self.currentSong = track
+        track = '/Users/mazenashgar/Desktop/GVSU/CIS 343/PythonProject/cli-audio/media/' + track + '.wav'
         self.wf = wave.open(track, 'rb')
+        #self.wf = wave.open('/Users/mazenashgar/Desktop/buddy.wav', 'rb')
 
         # instantiate PyAudio (1)
         self.p = pyaudio.PyAudio()
