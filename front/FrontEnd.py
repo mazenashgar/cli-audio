@@ -12,7 +12,7 @@ class FrontEnd:
     folderPath = '/Users/isfar/Desktop/collabProj/cli-audio/media/' #directory of media files
     mediaFiles = os.listdir(folderPath) #searches in the given folder path for the media files
 
-    def __init__(self, player): #contructor method for the class
+    def __init__(self, player): #constructor method for the class
         self.player = player
         curses.wrapper(self.menu)
 
