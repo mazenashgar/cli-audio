@@ -33,7 +33,7 @@ class Player:
         self.paused = False #set paused to false
         self.currentSong = track #display name of current song playing
         self.trackPlaying = track #display name of current song playing
-        track = '/Users/mazenashgar/Desktop/GVSU/CIS 343/PythonProject/cli-audio/media/' + track + '.wav' #get the name of track from the provided directory
+        track = '/Users/isfar/Desktop/collabProj/cli-audio/media/' + track + '.wav' #get the name of track from the provided directory
         self.wf = wave.open(track, 'rb') #acquire track
 
         # instantiate PyAudio
