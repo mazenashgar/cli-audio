@@ -17,7 +17,7 @@ class Player:
         if self.playingNow == True: #if a song is playing
             if self.stream.is_stopped() or self.paused == True: #if song is stopped or paused
                 self.currentSong = "Nothing playing." #display string
-                    return self.currentSong #string message returned
+                return self.currentSong #string message returned
 
     def pause(self):
         if self.paused == False: #if a song is not paused
