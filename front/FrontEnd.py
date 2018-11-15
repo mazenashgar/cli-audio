@@ -10,8 +10,7 @@ from os.path import isfile, join
 class FrontEnd:
 
     nowPlaying = False
-    folderPath = '/Users/mazenashgar/Desktop/GVSU/CIS 343/PythonProject/cli-audio/media'
-    mediaFiles = os.listdir(folderPath)
+    mediaFiles = os.listdir("media")
 
     def __init__(self, player):
         self.player = player
@@ -30,7 +29,7 @@ class FrontEnd:
               self.stdscr.addstr(6,10, "p - Play/Pause")
               self.stdscr.addstr(7,10, "l - Library")
               self.stdscr.addstr(9,10, "ESC - Quit")
-              self.updateSong()
+              #self.updateSong()
               self.stdscr.refresh()
             while True:
               height, width = self.stdscr.getmaxyx()
@@ -51,7 +50,7 @@ class FrontEnd:
               resize = curses.is_term_resized(height,width)
               if resize is True:
                  break
-    
+              self.updateSong()
     def updateSong(self):
         self.stdscr.addstr(15,10, "                                        ")
         self.stdscr.addstr(15,10, "Now playing: " + self.player.getCurrentSong())
@@ -96,6 +95,7 @@ class FrontEnd:
                  libraryWindow.addstr(placement, 1, self.mediaFiles[element][:-4])
                  self.stdscr.refresh()
                  placement += 1
+        curses.echo()
         str = libraryWindow.getstr(element+1,1,30)
         del libraryWindow
         self.stdscr.touchwin()
