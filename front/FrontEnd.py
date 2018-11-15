@@ -84,10 +84,11 @@ class FrontEnd:
         if (pathWithExt) in self.mediaFiles:  # if the song is present in the media files directory
             if self.nowPlaying == True:  # if a song is currently playing
                 self.player.stop()  # stop the player
-        #try:
-            #self.player.play(path.decode(encoding="utf-8"))  # play the song that has been requested
-           # self.nowPlaying = True  # player plays song
-            #except
+                try:
+                    self.player.play(path.decode(encoding="utf-8"))  # play the song that has been requested
+                    self.nowPlaying = True  # player plays song
+                except CLI_Audio_Exception.CLI_Audio_File_Exception:
+                    print("The audio file doesn't have the proper extension of .wav")
             else:
                 songDntExistsWindow = curses.newwin(5, 40, 5, 50)  # another window defined
                 songDntExistsWindow.border()  # draws a border around this window

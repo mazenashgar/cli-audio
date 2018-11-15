@@ -3,6 +3,8 @@
 import pyaudio
 import wave
 import time
+import os
+import CLI_Audio_Exception
 
 class Player:
 
@@ -33,7 +35,11 @@ class Player:
         self.paused = False #set paused to false
         self.currentSong = track #display name of current song playing
         self.trackPlaying = track #display name of current song playing
-        track = '/Users/isfar/Desktop/collabProj/cli-audio/media/' + track + '.wav' #get the name of track from the provided directory
+        filename, file_extension = os.path.splitext(track)
+
+        if file_extension != '.wav':
+            raise CLI_Audio_Exception.CLI_Audio_File_Exception
+
         self.wf = wave.open(track, 'rb') #acquire track
 
         # instantiate PyAudio
