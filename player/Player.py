@@ -11,7 +11,7 @@ class Player:
 
     playingNow = False #variable set to false
     trackPlaying = ""
-
+    mediaFiles = os.listdir("media")
     
     def __init__(self): #constructor method for the class
         self.currentSong = "Nothing playing."
