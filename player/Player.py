@@ -32,10 +32,12 @@ class Player:
             self.currentSong = self.trackPlaying #display name of current song playing
 
     def play(self, track):
-        self.paused = False #set paused to false
-        self.currentSong = track #display name of current song playing
-        self.trackPlaying = track #display name of current song playing
-        filename, file_extension = os.path.splitext(track)
+        self.paused = False
+        self.currentSong = track
+        self.trackPlaying = track
+        track = './media/' + track + '.wav'
+        self.wf = wave.open(track, 'rb')
+
 
         if file_extension != '.wav':
             raise CLI_Audio_Exception.CLI_Audio_File_Exception

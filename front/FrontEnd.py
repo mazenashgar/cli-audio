@@ -8,10 +8,11 @@ from os.path import isfile, join
 import CLI_Audio_Exception
 
 
+
 class FrontEnd:
     nowPlaying = False  # now playing set to false so nothing plays initially
-    folderPath = '/Users/isfar/Desktop/collabProj/cli-audio/media/'  # directory of media files
-    mediaFiles = os.listdir(folderPath)  # searches in the given folder path for the media files
+    mediaFiles = os.listdir("media")
+
 
     def __init__(self, player):  # constructor method for the class
         self.player = player
@@ -21,7 +22,6 @@ class FrontEnd:
         self.stdscr = curses.initscr()  # curses is initialized. returns a window object representing the entire screen
         self.stdscr.border()  # draws a border around the edges of the window
         while True:
-
             try:
                 height, width = self.stdscr.getmaxyx()  # returns a tuple (y,x) of the height and width of the window
                 if height < 16 and width < 60:
@@ -68,6 +68,51 @@ class FrontEnd:
                            "Now playing: " + self.player.getCurrentSong())  # if a song is updated the current song is displayed
 
     def changeSong(self):
+        
+             changeWindow = curses.newwin(5, 40, 5, 50)
+             changeWindow.border()
+             changeWindow.addstr(0,0, "What is the file path?", curses.A_REVERSE)
+             self.stdscr.refresh()
+             curses.echo()
+             path = changeWindow.getstr(1,1, 30)
+             curses.noecho()
+             del changeWindow
+             self.stdscr.touchwin()
+             self.stdscr.refresh()
+             pathWithExt = (path.decode(encoding="utf-8")) + '.wav'
+             if (pathWithExt) in self.mediaFiles:
+                  if self.nowPlaying == True:
+                      self.player.stop()
+                  self.player.play(path.decode(encoding="utf-8"))
+                  self.nowPlaying = True
+             else:
+                 songDntExistsWindow = curses.newwin(5, 40, 5, 50)
+                 songDntExistsWindow.border()
+                 songDntExistsWindow.addstr(1,1, "No such song in media folder")
+                 self.stdscr.refresh()
+                 curses.echo()
+                 input = songDntExistsWindow.getstr(3,1, 30)
+                 curses.noecho()
+                 del songDntExistsWindow
+                 self.stdscr.touchwin()
+                 self.stdscr.refresh()
+        
+    def displayDir(self):
+        libraryWindow = curses.newwin(len(self.mediaFiles)+2, 40, 5, 50)
+        libraryWindow.border()
+        libraryWindow.addstr(0,0, "Available songs:", curses.A_REVERSE)
+        placement = 1
+        for element in range(len(self.mediaFiles)):
+            if self.mediaFiles[element] != 'README.md' and self.mediaFiles[element] != '.DS_Store':
+                 libraryWindow.addstr(placement, 1, self.mediaFiles[element][:-4])
+                 self.stdscr.refresh()
+                 placement += 1
+        curses.echo()
+        str = libraryWindow.getstr(element+1,1,30)
+        del libraryWindow
+        self.stdscr.touchwin()
+        self.stdscr.refresh()
+
 
         changeWindow = curses.newwin(5, 40, 5, 50)  # return a new window
         changeWindow.border()  # draws a border around the new window
