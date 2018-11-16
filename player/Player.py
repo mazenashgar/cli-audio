@@ -35,16 +35,13 @@ class Player:
             self.currentSong = self.trackPlaying #display name of current song playing
 
     def play(self, track):
+        pathWithExt = track + '.wav'
+        if pathWithExt not in self.mediaFiles:
+                raise CLI_Audio_Exception.CLI_Audio_File_Exception
         self.paused = False
         self.currentSong = track
         self.trackPlaying = track
         track = './media/' + track + '.wav'
-        self.wf = wave.open(track, 'rb')
-
-
-        if file_extension != '.wav':
-            raise CLI_Audio_Exception.CLI_Audio_File_Exception
-
         self.wf = wave.open(track, 'rb') #acquire track
 
         # instantiate PyAudio

@@ -79,7 +79,7 @@ class FrontEnd:
              del changeWindow
              self.stdscr.touchwin()
              self.stdscr.refresh()
-             pathWithExt = (path.decode(encoding="utf-8")) + '.wav'
+
              if (pathWithExt) in self.mediaFiles:
                   if self.nowPlaying == True:
                       self.player.stop()
