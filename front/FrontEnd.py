@@ -51,7 +51,6 @@ class FrontEnd:
                     if self.nowPlaying == True:  # if nowPlaying() method returns true here
                         self.player.pause()  # player is paused
                 elif c == ord('c'):  # if c is clicked by the user
-                        # if height >= 10 and width >= 90:
                         self.changeSong()  # changeSong() method is called
                         self.updateSong()  # updateSong() methos is called
                         self.stdscr.touchwin()  # pretend the whole window has been changed, for purposes of drawing optimizations
@@ -80,12 +79,12 @@ class FrontEnd:
              self.stdscr.touchwin()
              self.stdscr.refresh()
 
-             if (pathWithExt) in self.mediaFiles:
+             try:
                   if self.nowPlaying == True:
                       self.player.stop()
                   self.player.play(path.decode(encoding="utf-8"))
                   self.nowPlaying = True
-             else:
+             except:
                  songDntExistsWindow = curses.newwin(5, 40, 5, 50)
                  songDntExistsWindow.border()
                  songDntExistsWindow.addstr(1,1, "No such song in media folder")
@@ -96,77 +95,25 @@ class FrontEnd:
                  del songDntExistsWindow
                  self.stdscr.touchwin()
                  self.stdscr.refresh()
-        
+    
     def displayDir(self):
-        libraryWindow = curses.newwin(len(self.mediaFiles)+2, 40, 5, 50)
-        libraryWindow.border()
-        libraryWindow.addstr(0,0, "Available songs:", curses.A_REVERSE)
+        libraryWindow = curses.newwin(len(self.mediaFiles) + 2, 40, 5, 50)  # window defined
+        libraryWindow.border()  # draws border around window
+        libraryWindow.addstr(0, 0, "Available songs:",
+                         curses.A_REVERSE)  # paint the string at (0,0) a reverse video status line is displayed
         placement = 1
         for element in range(len(self.mediaFiles)):
-            if self.mediaFiles[element] != 'README.md' and self.mediaFiles[element] != '.DS_Store':
-                 libraryWindow.addstr(placement, 1, self.mediaFiles[element][:-4])
-                 self.stdscr.refresh()
-                 placement += 1
-        curses.echo()
-        str = libraryWindow.getstr(element+1,1,30)
-        del libraryWindow
-        self.stdscr.touchwin()
-        self.stdscr.refresh()
-
-
-        changeWindow = curses.newwin(5, 40, 5, 50)  # return a new window
-        changeWindow.border()  # draws a border around the new window
-        changeWindow.addstr(0, 0, "What is the file path?",
-                            curses.A_REVERSE)  # displays the specified string on the new wiindow
-        self.stdscr.refresh()  # updates the window
-        curses.echo()  # enter echo mode.each character input is echoed to the screen as it is entered
-        path = changeWindow.getstr(1, 1, 30)  # reads a string from the user
-        curses.noecho()  # leave echo mode. echoeing of input character inoout is turned off.
-        del changeWindow  # changed window removed
-        self.stdscr.touchwin()  # pretend the whole window has been changed, for purposes of drawing optimizations
-        self.stdscr.refresh()  # updates the window
-        pathWithExt = (path.decode(encoding="utf-8")) + '.wav'  # path with .wav extension defined
-        if (pathWithExt) in self.mediaFiles:  # if the song is present in the media files directory
-            if self.nowPlaying == True:  # if a song is currently playing
-                self.player.stop()  # stop the player
-                try:
-                    self.player.play(path.decode(encoding="utf-8"))  # play the song that has been requested
-                    self.nowPlaying = True  # player plays song
-                except CLI_Audio_Exception.CLI_Audio_File_Exception:
-                    print("The audio file doesn't have the proper extension of .wav")
-            else:
-                songDntExistsWindow = curses.newwin(5, 40, 5, 50)  # another window defined
-                songDntExistsWindow.border()  # draws a border around this window
-                songDntExistsWindow.addstr(1, 1,"No such song in media folder")  # prints the specified string at (1,1) on this new window
-            self.stdscr.refresh()  # updates the undow
-            curses.echo()  # enter echo mode. each character input is echoed to the screen as it is entered
-            input = songDntExistsWindow.getstr(3, 1, 30)  # reads user input
-            curses.noecho()  # leave echo mode. echoeing of input character inoout is turned off.
-            del songDntExistsWindow  # changed window removed
-            self.stdscr.touchwin()  # pretend the whole window has been changed, for purposes of drawing optimizations
-            self.stdscr.refresh()  # updates the window
-
-
-def displayDir(self):
-    libraryWindow = curses.newwin(len(self.mediaFiles) + 2, 40, 5, 50)  # window defined
-    libraryWindow.border()  # draws border around window
-    libraryWindow.addstr(0, 0, "Available songs:",
-                         curses.A_REVERSE)  # paint the string at (0,0) a reverse video status line is displayed
-    placement = 1
-    for element in range(len(self.mediaFiles)):
-        if self.mediaFiles[element] != 'README.md' and self.mediaFiles[element] != '.DS_Store':  # valid media file
+          if self.mediaFiles[element] != 'README.md' and self.mediaFiles[element] != '.DS_Store':  # valid media file
             libraryWindow.addstr(placement, 1, self.mediaFiles[element][
                                                :-4])  # prints the specified string at the given position on window
             self.stdscr.refresh()  # updates the window
-            print(self.mediaFiles[element])  # print media files
             placement += 1
-    str = libraryWindow.getstr(element + 1, 1, 30)  # reads a string from the user
-    del libraryWindow  # window removed
-    self.stdscr.touchwin()  # pretend the whole window has been changed, for purposes of drawing optimizations
-    self.stdscr.refresh()  # updates the window
-
-
-def quit(self):
-    if self.nowPlaying == True:  # is a song is currently playing
+        str = libraryWindow.getstr(element + 1, 1, 30)  # reads a string from the user
+        del libraryWindow  # window removed
+        self.stdscr.touchwin()  # pretend the whole window has been changed, for purposes of drawing optimizations
+        self.stdscr.refresh()  # updates the window
+   
+    def quit(self):
+      if self.nowPlaying == True:  # is a song is currently playing
         self.player.stop()  # stop playing song
-        exit()  # leave player
+      exit()  # leave player

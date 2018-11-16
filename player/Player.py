@@ -22,13 +22,13 @@ class Player:
         if self.playingNow == True: #if a song is playing
             if self.stream.is_stopped() or self.paused == True: #if song is stopped or paused
                 self.currentSong = "Nothing playing." #display string
-                return self.currentSong #string message returned
+        return self.currentSong #string message returned
 
     def pause(self):
         if self.paused == False: #if a song is not paused
             self.paused = True #set paused to true
             self.stream.stop_stream() #pause the song
-            #self.currentSong = "Nothing playing."
+            self.currentSong = "Nothing playing."
         else: #if a song is paused
             self.paused = False #set paused to false
             self.stream.start_stream() #start playing song
