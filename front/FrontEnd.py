@@ -1,6 +1,5 @@
 import curses
 import curses.textpad
-
 import sys
 import os
 import glob

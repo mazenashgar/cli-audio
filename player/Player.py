@@ -3,11 +3,15 @@
 import pyaudio
 import wave
 import time
+from os import listdir
+
 
 class Player:
 
     playingNow = False
     trackPlaying = ""
+    mediaFiles = os.listdir("media")
+
     def __init__(self):
         self.currentSong = "Nothing playing."
         self.paused = True
