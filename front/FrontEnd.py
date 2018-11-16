@@ -10,7 +10,7 @@ from os.path import isfile, join
 class FrontEnd:
 
     nowPlaying = False
-    folderPath = '/Users/mazenashgar/Desktop/GVSU/CIS 343/PythonProject/cli-audio/media'
+    folderPath = '/home/arope/Documents/343python/cli-audio/media/'
     mediaFiles = os.listdir(folderPath)
 
     def __init__(self, player):
