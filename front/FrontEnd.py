@@ -108,8 +108,10 @@ class FrontEnd:
                                                :-4])  # prints the specified string at the given position on window
             self.stdscr.refresh()  # updates the window
             placement += 1
+        curses.echo()
         str = libraryWindow.getstr(element + 1, 1, 30)  # reads a string from the user
         del libraryWindow  # window removed
+        curses.noecho()
         self.stdscr.touchwin()  # pretend the whole window has been changed, for purposes of drawing optimizations
         self.stdscr.refresh()  # updates the window
    
