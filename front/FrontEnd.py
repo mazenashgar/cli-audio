@@ -13,13 +13,6 @@ class FrontEnd:
     nowPlaying = False  # now playing set to false so nothing plays initially
     mediaFiles = os.listdir("media")
 
-<<<<<<< HEAD
-    nowPlaying = False
-    folderPath = '/home/arope/Documents/343python/cli-audio/media/'
-    mediaFiles = os.listdir(folderPath)
-=======
->>>>>>> 43c6feb05a9ce008a229921eb8338f661b44dec8
-
     def __init__(self, player):  # constructor method for the class
         self.player = player
         curses.wrapper(self.menu)
@@ -68,7 +61,7 @@ class FrontEnd:
                     break
                 self.updateSong()
     def updateSong(self):
-        self.stdscr.addstr(15, 10, "                               ")
+        self.stdscr.addstr(15, 10, "                             ")
         self.stdscr.addstr(15, 10,
                            "Now playing: " + self.player.getCurrentSong())  # if a song is updated the current song is displayed
 
@@ -85,6 +78,7 @@ class FrontEnd:
              self.stdscr.touchwin()
              self.stdscr.refresh()
 
+           # tryPlaying(path)
              try:
                   if self.nowPlaying == True:
                       self.player.stop()
@@ -121,6 +115,24 @@ class FrontEnd:
         self.stdscr.touchwin()  # pretend the whole window has been changed, for purposes of drawing optimizations
         self.stdscr.refresh()  # updates the window
    
+        try:
+            if self.nowPlaying == True:
+               self.player.stop()
+            self.player.play(str.decode(encoding='utf-8'))
+            self.nowPlaying = True
+
+        except:
+           songDntExistWindow = curses.newwin(5,40,5,50)
+           songDntExistWindow.border()
+           songDntExistWindow.addstr(1,1, "No such song in media folder")
+           self.stdscr.refresh()
+           curses.echo()
+           input = songDntExistWindow.getstr(3,1,30)
+           curses.noecho()
+           del songDntExistWindow
+           self.stdscr.touchwin()
+           self.stdscr.refresh()
+
     def quit(self):
       if self.nowPlaying == True:  # is a song is currently playing
         self.player.stop()  # stop playing song

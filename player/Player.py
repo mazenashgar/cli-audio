@@ -43,13 +43,8 @@ class Player:
         self.paused = False
         self.currentSong = track
         self.trackPlaying = track
-<<<<<<< HEAD
-        track = '/home/arope/Documents/343python/cli-audio/media/' + track + '.wav'
-        self.wf = wave.open(track, 'rb')
-=======
         track = './media/' + track + '.wav'
         self.wf = wave.open(track, 'rb') #acquire track
->>>>>>> 43c6feb05a9ce008a229921eb8338f661b44dec8
 
         # instantiate PyAudio
         self.p = pyaudio.PyAudio()
