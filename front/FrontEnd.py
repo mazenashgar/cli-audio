@@ -13,6 +13,12 @@ class FrontEnd:
     nowPlaying = False  # now playing set to false so nothing plays initially
     mediaFiles = os.listdir("media")
 
+<<<<<<< HEAD
+    nowPlaying = False
+    folderPath = '/home/arope/Documents/343python/cli-audio/media/'
+    mediaFiles = os.listdir(folderPath)
+=======
+>>>>>>> 43c6feb05a9ce008a229921eb8338f661b44dec8
 
     def __init__(self, player):  # constructor method for the class
         self.player = player
