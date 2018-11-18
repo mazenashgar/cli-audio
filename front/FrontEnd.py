@@ -36,7 +36,7 @@ class FrontEnd:
                     self.stdscr.addstr(6, 10, "p - Play/Pause")  # paints the string at (6,10) on the window
                     self.stdscr.addstr(7, 10, "l - Library")  # paints the string at (7,10) on the window
                     self.stdscr.addstr(9, 10, "ESC - Quit")  ##paints the string at (9,10) on the window
-                    self.updateSong()  # updateSong() method is called
+                    #self.updateSong()  # updateSong() method is called
                     self.stdscr.refresh()  # updates the window
 
             except CLI_Audio_Exception.CLI_Audio_Screen_Size_Exception:
@@ -60,9 +60,9 @@ class FrontEnd:
                 resize = curses.is_term_resized(height, width)  # resizes the window to to the specified dimensions
                 if resize is True:
                     break
-
+                self.updateSong()
     def updateSong(self):
-        self.stdscr.addstr(15, 10, "                                        ")
+        self.stdscr.addstr(15, 10, "                               ")
         self.stdscr.addstr(15, 10,
                            "Now playing: " + self.player.getCurrentSong())  # if a song is updated the current song is displayed
 

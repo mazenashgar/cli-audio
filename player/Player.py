@@ -20,17 +20,19 @@ class Player:
 
     def getCurrentSong(self):
         if self.playingNow == True: #if a song is playing
-            if self.stream.is_stopped() or self.paused == True: #if song is stopped or paused
+            if self.paused == True: #if song is paused change the displayed text
                 self.currentSong = "Nothing playing." #display string
         return self.currentSong #string message returned
 
     def pause(self):
         if self.paused == False: #if a song is not paused
             self.paused = True #set paused to true
+            self.playingNow = False
             self.stream.stop_stream() #pause the song
             self.currentSong = "Nothing playing."
         else: #if a song is paused
             self.paused = False #set paused to false
+            self.playingNow = True
             self.stream.start_stream() #start playing song
             self.currentSong = self.trackPlaying #display name of current song playing
 
